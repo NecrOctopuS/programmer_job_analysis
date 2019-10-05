@@ -1,5 +1,5 @@
 import requests
-
+import predict_rub_salary
 
 POPULAR_PROGRAMMING_LANGUAGES = [
     'TypeScript',
@@ -19,24 +19,6 @@ POPULAR_PROGRAMMING_LANGUAGES = [
 ]
 
 VERSION = '2.27'
-
-
-def predict_rub_salary(vacancie):
-    lower_salary = vacancie['payment_from']
-    upper_salary = vacancie['payment_to']
-    currency = vacancie['currency']
-    if lower_salary and upper_salary:
-        middle_salary = (lower_salary + upper_salary) / 2
-    elif lower_salary:
-        middle_salary = lower_salary * 1.2
-    elif upper_salary:
-        middle_salary = upper_salary * 0.8
-    else:
-        return None
-    if currency == 'rub':
-        return middle_salary
-    else:
-        return None
 
 
 def analys_programmer_job(SUPERJOB_SECRET_KEY):
@@ -68,9 +50,12 @@ def analys_programmer_job(SUPERJOB_SECRET_KEY):
         vacancies_processed = 0
         total_processed_salary = 0
         for vacancie in vacancies:
-            if predict_rub_salary(vacancie):
+            lower_salary = vacancie['payment_from']
+            upper_salary = vacancie['payment_to']
+            currency = vacancie['currency']
+            if predict_rub_salary.predict_rub_salary(lower_salary, upper_salary, currency):
                 vacancies_processed += 1
-                total_processed_salary += predict_rub_salary(vacancie)
+                total_processed_salary += predict_rub_salary.predict_rub_salary(lower_salary, upper_salary, currency)
         if vacancies_processed:
             average_salary = int(total_processed_salary / vacancies_processed)
         else:
