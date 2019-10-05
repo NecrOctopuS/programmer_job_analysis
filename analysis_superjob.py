@@ -40,9 +40,10 @@ def analys_programmer_job(SUPERJOB_SECRET_KEY):
         while True:
             sj_params['page'] = page
             response = requests.get(sj_url, headers=header, params=sj_params)
-            vacancies_on_page = response.json()['objects']
+            sj_response = response.json()
+            vacancies_on_page = sj_response['objects']
             vacancies += vacancies_on_page
-            if response.json()['more']:
+            if sj_response['more']:
                 page += 1
             else:
                 break

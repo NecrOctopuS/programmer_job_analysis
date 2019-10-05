@@ -36,9 +36,10 @@ def analys_programmer_job():
         while page < pages_number:
             hh_params['page'] = page
             response = requests.get(hh_url, params=hh_params)
-            vacancies_on_page = response.json()['items']
+            hh_response = response.json()
+            vacancies_on_page = hh_response['items']
             vacancies += vacancies_on_page
-            pages_number = response.json()['pages']
+            pages_number = hh_response['pages']
             page += 1
         vacancies_processed = 0
         total_processed_salary = 0
