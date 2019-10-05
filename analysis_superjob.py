@@ -1,6 +1,5 @@
 import requests
-import os
-from dotenv import load_dotenv
+
 
 POPULAR_PROGRAMMING_LANGUAGES = [
     'TypeScript',
@@ -18,8 +17,7 @@ POPULAR_PROGRAMMING_LANGUAGES = [
     'Java',
     'JavaScript'
 ]
-load_dotenv()
-SUPERJOB_SECRET_KEY = os.getenv('SUPERJOB_SECRET_KEY')
+
 VERSION = '2.27'
 
 
@@ -41,7 +39,7 @@ def predict_rub_salary(vacancie):
         return None
 
 
-def analys_programmer_job():
+def analys_programmer_job(SUPERJOB_SECRET_KEY):
     programmer_job_analysis = {}
     method_name = 'vacancies'
     sj_url = f'https://api.superjob.ru/{VERSION}/{method_name}/'

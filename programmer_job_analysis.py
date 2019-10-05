@@ -1,7 +1,8 @@
 import analysis_superjob
 import analysis_hh
+import os
 from terminaltables import AsciiTable
-
+from dotenv import load_dotenv
 
 def print_table(programmer_job_analysis, title):
     table_data = [['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
@@ -17,9 +18,11 @@ def print_table(programmer_job_analysis, title):
 
 
 def main():
+    load_dotenv()
+    SUPERJOB_SECRET_KEY = os.getenv('SUPERJOB_SECRET_KEY')
     title_hh = 'HeadHunter Moscow'
     title_sj = 'SuperJob Moscow'
-    sj_dict = analysis_superjob.analys_programmer_job()
+    sj_dict = analysis_superjob.analys_programmer_job(SUPERJOB_SECRET_KEY)
     hh_dict = analysis_hh.analys_programmer_job()
     print_table(sj_dict, title_sj)
     print_table(hh_dict, title_hh)
