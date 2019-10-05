@@ -34,11 +34,10 @@ def analys_programmer_job(SUPERJOB_SECRET_KEY):
             'catalogues': 48
         }
         page = 0
-        pages_number = 1
         vacancies = []
         response = requests.get(sj_url, headers=header, params=sj_params)
         vacancies_found = response.json()['total']
-        while page < pages_number:
+        while True:
             sj_params['page'] = page
             response = requests.get(sj_url, headers=header, params=sj_params)
             vacancies_on_page = response.json()['objects']
